@@ -20,13 +20,7 @@ Or install it yourself as:
     $ gem install fedex
 
 
-Projeact:
-run `bin/setup`
-run `bin/console` for an interactive prompt.
-
-
 ## Usage
-Install:
 
 Add Credentials and query params:
 ```ruby

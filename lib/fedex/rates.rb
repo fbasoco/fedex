@@ -8,57 +8,11 @@ module Fedex
     URL = "https://wsbeta.fedex.com:443/xml/"
 
     def self.get(credentials, quote_params)
-      puts "Credentials: "
-      puts credentials
-
-      puts "Quote params: "
-      puts quote_params
-
       xml_body = request_body(credentials, quote_params)
-      puts xml_body
 
       response = HTTParty.post(URL, body: xml_body)
 
       response_data(response)
-    end
-
-    def self.test
-      # User Credentials
-      credentials = {
-        user_credential: {
-          key: "bkjIgUhxdghtLw9L",
-          password: "6p8oOccHmDwuJZCyJs44wQ0Iw"
-        },
-        user_details: {
-          accoun_number: "510087720",
-          meter_number: "119238439"
-        }
-      }
-
-
-      # Quote params
-      quote_params = {
-        address_from: {
-          zip: "64000",
-          country: "MX"
-        },
-        address_to: {
-          zip: "06500",
-          country: "MX"
-        },
-        parcel: {
-          length: 25,
-          witdh: 28,
-          height: 46,
-          distance_unit: "CM",
-          weight: 6.5,
-          mass_unit: "KG"
-        }
-      }
-
-      request_body(credentials, quote_params)
-
-      get(credentials, quote_params)
     end
 
     def self.request_body(credentials, quote_params)
@@ -134,18 +88,25 @@ module Fedex
     def self.response_data(response)
       data = []
 
-      response.parsed_response["RateReply"]["RateReplyDetails"].each do |rate_reply_detail|
-        next unless rate_reply_detail.key?("ServiceType")
-
-        data << {
-          price: rate_reply_detail["RatedShipmentDetails"][0]["ShipmentRateDetail"]["TotalNetChargeWithDutiesAndTaxes"]["Amount"],
-          currency: rate_reply_detail["RatedShipmentDetails"][0]["ShipmentRateDetail"]["TotalNetChargeWithDutiesAndTaxes"]["Currency"],
-          service_level: {
-            name: rate_reply_detail["ServiceType"].gsub("_", " ").capitalize,
-            token: rate_reply_detail["ServiceType"]
+      begin
+        response.parsed_response["RateReply"]["RateReplyDetails"].each do |rate_reply_detail|
+          next unless rate_reply_detail.key?("ServiceType")
+  
+          data << {
+            price: rate_reply_detail["RatedShipmentDetails"][0]["ShipmentRateDetail"]["TotalNetChargeWithDutiesAndTaxes"]["Amount"],
+            currency: rate_reply_detail["RatedShipmentDetails"][0]["ShipmentRateDetail"]["TotalNetChargeWithDutiesAndTaxes"]["Currency"],
+            service_level: {
+              name: rate_reply_detail["ServiceType"].gsub("_", " ").capitalize,
+              token: rate_reply_detail["ServiceType"]
+            }
           }
-        }
+        end
+      rescue => exception
+        puts "No valid data"
+        return nil
       end
+
+      
 
       data
     end

@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
-  spec.add_dependency "httparty", '~> 0.13.7'
+  spec.add_dependency "httparty", "~> 0.13.7"
   spec.add_dependency "nokogiri", "~> 1.6", ">= 1.6.8"
 
   # For more information and examples about making a new gem, check out our
