@@ -2,7 +2,6 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fedex`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -20,9 +19,49 @@ Or install it yourself as:
 
     $ gem install fedex
 
-## Usage
 
-TODO: Write usage instructions here
+Projeact:
+run `bin/setup`
+run `bin/console` for an interactive prompt.
+
+
+## Usage
+Install:
+
+Add Credentials and query params:
+```ruby
+    credentials = {
+        user_credential: {
+          key: "bkjIgUhxdghtLw9L",
+          password: "6p8oOccHmDwuJZCyJs44wQ0Iw"
+        },
+        user_details: {
+          accoun_number: "510087720",
+          meter_number: "119238439"
+        }
+      }
+
+    quote_params = {
+        address_from: {
+            zip: "64000",
+            country: "MX"
+        },
+        address_to: {
+            zip: "64000",
+            country: "MX"
+        },
+        parcel: {
+            length: 25.0,
+            width: 28.0,
+            height: 46.0,
+            distance_unit: "cm",
+            weight: 6.5,
+            mass_unit: "kg"
+        }
+    }
+
+    rates = Fedex::Rates.get(credentials, quote_params)
+````
 
 ## Development
 
@@ -32,4 +71,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fedex.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fbasoco/fedex.

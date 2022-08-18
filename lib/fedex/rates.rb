@@ -24,13 +24,17 @@ module Fedex
 
     def self.test
       # User Credentials
-      credentials = {}
-      credentials[:user_credential] = {}
-      credentials[:user_credential][:key] = "bkjIgUhxdghtLw9L"
-      credentials[:user_credential][:password] = "6p8oOccHmDwuJZCyJs44wQ0Iw"
-      credentials[:user_details] = {}
-      credentials[:user_details][:accoun_number] = "510087720"
-      credentials[:user_details][:meter_number] = "119238439"
+      credentials = {
+        user_credential: {
+          key: "bkjIgUhxdghtLw9L",
+          password: "6p8oOccHmDwuJZCyJs44wQ0Iw"
+        },
+        user_details: {
+          accoun_number: "510087720",
+          meter_number: "119238439"
+        }
+      }
+
 
       # Quote params
       quote_params = {
