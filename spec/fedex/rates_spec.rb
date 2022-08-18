@@ -34,6 +34,8 @@ RSpec.describe Fedex::Rates do
     }
 
     response = Fedex::Rates.get(credentials, quote_params)
+
+		puts response
     
     expect(response).not_to be nil
     end

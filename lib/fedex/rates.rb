@@ -9,15 +9,6 @@ module Fedex
 
     def self.get(credentials, quote_params)
       xml_body = request_body(credentials, quote_params)
-      puts "credentials"
-      puts credentials
-      puts ""
-      puts "quote_params"
-      puts quote_params
-      puts ""
-      puts "xml_body"
-      puts xml_body
-
       response = HTTParty.post(URL, body: xml_body)
 
       response_data(response)
@@ -31,15 +22,13 @@ module Fedex
               xml.Key credentials[:user_credential][:key].to_s # "bkjIgUhxdghtLw9L"
               xml.Password credentials[:user_credential][:password].to_s # "6p8oOccHmDwuJZCyJs44wQ0Iw"
             end
-        
-
-            xml.ClientDetail do
-              xml.AccountNumber credentials[:user_details][:accoun_number].to_s # "510087720"
-              xml.MeterNumber credentials[:user_details][:meter_number].to_s # "119238439"
-              xml.Localization do
-                xml.LanguageCode "es"
-                xml.LocaleCode "mx"
-              end
+          end
+          xml.ClientDetail do
+            xml.AccountNumber credentials[:user_details][:accoun_number].to_s # "510087720"
+            xml.MeterNumber credentials[:user_details][:meter_number].to_s # "119238439"
+            xml.Localization do
+              xml.LanguageCode "es"
+              xml.LocaleCode "mx"
             end
           end
           xml.Version do
@@ -115,8 +104,6 @@ module Fedex
         puts "No valid data"
         return nil
       end
-
-      
 
       data
     end
